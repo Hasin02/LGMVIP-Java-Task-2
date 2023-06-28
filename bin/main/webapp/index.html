@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#convertBtn").click(function() {
+                var amount = $("#amount").val();
+                var sourceCurrency = $("#sourceCurrency").val();
+                var targetCurrency = $("#targetCurrency").val();
+
+                $.ajax({
+                    url: "CurrencyConversionServlet",
+                    type: "POST",
+                    data: {amount: amount, sourceCurrency: sourceCurrency, targetCurrency: targetCurrency},
+                    success: function(data) {
+                        $("#result").text("Converted Amount: " + data);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <form>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount">
+        <br>
+        <label for="sourceCurrency">Source Currency:</label>
+        <select id="sourceCurrency" name="sourceCurrency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select>
+        <br>
+        <label for="targetCurrency">Target Currency:</label>
+        <select id="targetCurrency" name="targetCurrency">
+            <option value="INR">INR</option>
+            <option value="JPY">JPY</option>
+            <option value="CAD">CAD</option>
+        </select>
+        <br>
+        <button type="button" id="convertBtn">Convert</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
